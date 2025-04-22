@@ -34,8 +34,7 @@ Explora carátulas originales, sinopsis, puntuaciones y descubre films olvidados
 | **The Movie Database (TMDB)** | API para datos de películas.          |
 
 ## 📸 Capturas de Pantalla
-| Catálogo | Quiz |
-|----------|------|
+
 | ![Catálogo](/public/screenshots/cap1.jpg) | ![Quiz](/public/screenshots/cap2.jpg) |
 | ![Catálogo](/public/screenshots/cap2.jpg) | ![Quiz](/public/screenshots/cap4.jpg) | 
-                                            | ![Quiz](/public/screenshots/cap5.jpg) |
+| ![Quiz](/public/screenshots/cap5.jpg) |
