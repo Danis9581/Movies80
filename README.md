@@ -36,4 +36,6 @@ Explora carátulas originales, sinopsis, puntuaciones y descubre films olvidados
 ## 📸 Capturas de Pantalla
 | Desktop | Mobile |
 |---------|--------|
-| ![Desktop Screenshot](/public/screenshots/desktop.png) | ![Mobile Screenshot](/public/screenshots/mobile.png) |
+| ![Catálogo](/public/screenshots/cap1.jpg) | ![Quiz](/public/screenshots/cap2.jpg) |
+| ![Catálogo](/public/screenshots/cap3.jpg) | ![Quiz](/public/screenshots/cap4.jpg) |
+| ![Quiz](/public/screenshots/cap5.jpg) |
