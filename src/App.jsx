@@ -33,7 +33,7 @@ export default function App() {
             className="font-creepster inline-flex items-center justify-center bg-80s-yellow hover:bg-yellow-400 text-red-500 py-2 px-8 rounded-full shadow-xl transition duration-300 mb-8 border-2 border-80s-purple shadow-neon-purple text-xl"
           >
             ¿Qué tanto sabes sobre este género?
-            <img src="/public/MandoRetro.png" alt="Mando de consola" className="ml-3 h-8 w-12" />
+            <img src="/MandoRetro.png" alt="Mando de consola" className="ml-3 h-8 w-12" />
           </Link>
         )}
         

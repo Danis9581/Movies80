@@ -50,12 +50,12 @@ const retroStyles = {
 
 const backgroundImages = [
   `url(${bosqueTerror})`,
-  'url("/public/imgGame/0.jpg")',
-  'url("/public/imgGame/10.jpg")',
-  'url("/public/imgGame/20.jpg")',
-  'url("/public/imgGame/30.jpg")',
-  'url("/public/imgGame/40.jpg")',
-  'url("/public/imgGame/50.jpg")',
+  'url("/imgGame/0.jpg")',
+  'url("/imgGame/10.jpg")',
+  'url("/imgGame/20.jpg")',
+  'url("/imgGame/30.jpg")',
+  'url("/imgGame/40.jpg")',
+  'url("/imgGame/50.jpg")',
 ];
 
 function QuizPage() {
