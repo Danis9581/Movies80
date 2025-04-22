@@ -1,12 +1,34 @@
-# React + Vite
+# 🎬 Movie Horror Quiz - Juego de Trivia de Películas de Terror
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![Vercel Deployment](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=flat&logo=vercel)](https://movies80.vercel.app)
+[![React](https://img.shields.io/badge/React-18.2-blue?logo=react)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-4.4-orange?logo=vite)](https://vitejs.dev/)
+[![License](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
 
-Currently, two official plugins are available:
+Un juego interactivo de trivia sobre películas de terror, con efectos de sonido, imágenes temáticas y preguntas desafiantes. ¡Demuestra cuánto sabes del cine de terror!
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Demo en Vivo
+👉 [https://movies80.vercel.app](https://movies80.vercel.app)
 
-## Expanding the ESLint configuration
+## ✨ Características Principales
+- **🎮 Quiz Dinámico**: Preguntas aleatorias sobre clásicos del terror.
+- **🎥 Multimedia Inmersiva**: Fondos de películas icónicas y efectos de sonido.
+- **⚡ Rendimiento Optimizado**: Gracias a Vite y React 18.
+- **📱 Responsive**: Funciona en móviles, tablets y desktop.
+- **🔒 Variables de Entorno**: Claves de API protegidas con Vercel.
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Tecnologías Utilizadas
+| Tecnología       | Uso en el Proyecto                     |
+|------------------|---------------------------------------|
+| **React 18**     | Componentes interactivos y estado.    |
+| **Vite**         | Bundler ultrarrápido y HMR.           |
+| **JavaScript ES6**| Lógica del juego y manejo de eventos. |
+| **CSS3**         | Estilos personalizados y animaciones. |
+| **React Router** | Navegación entre vistas (si aplica).  |
+| **Vercel**       | Despliegue automático desde GitHub.    |
+| **The Movie Database (TMDB)** | API para datos de películas.          |
+
+## 📸 Capturas de Pantalla
+| Desktop | Mobile |
+|---------|--------|
+| ![Desktop Screenshot](/public/screenshots/desktop.png) | ![Mobile Screenshot](/public/screenshots/mobile.png) |
