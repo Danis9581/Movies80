@@ -1,17 +1,16 @@
-## 🎬 80s Horror Vault - La Era Dorada del Terror
+## 🎬 80s Horror80 - La Era Dorada del Terror
 
 [![Vercel Deployment](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=flat&logo=vercel)](https://movies80.vercel.app)
 [![React](https://img.shields.io/badge/React-18.2-blue?logo=react)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-4.4-orange?logo=vite)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.3-blueviolet?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
 
-**Explora el catálogo definitivo de películas de terror de los 80**, una década donde el género reinventó sus límites con maestros como Carpenter, Craven y Romero. Esta plataforma combina:
+**Plataforma donde podrás encontrar información sobre más de 2800 películas del género de terror ochentero —el mejor de la historia—, donde la creatividad no tenía límites y no todo eran espíritus y sustos a lo tonto.**  
 
-- **📚 API - TMBD**: Accede a información detallada de +2800 títulos (sinopsis, popularidad, carátulas originales en alta resolución).
-- **🧪 Quiz Interactivo**: 
-  - 2 modos: *Modo Texto* (preguntas icónicas) y *Modo Imagen* (identifica acierto por imagen).
-  - Sistema de recompensas: Cada 10 aciertos, avanzarás en el background trasero.
-- **🕹️ Nostalgia Controlada**: Diseño UI inspirado en videoclubs ochenteros, con efectos de VHS y glitches deliberados.
+Explora carátulas originales, sinopsis, puntuaciones y descubre films olvidados. Además, incluye un **Quiz Friki** con preguntas de texto e imagen para poner a prueba tu conocimiento. Cada 10 aciertos, el fondo cambia, llevándote a escenarios icónicos que solo verás si alcanzas las 50 respuestas correctas.  
+
+*"Porque en los 80, el miedo se fabricaba con latex, ingenio y locura."* 
 
 ## 🚀 Demo en Vivo
 👉 [https://movies80.vercel.app](https://movies80.vercel.app)
