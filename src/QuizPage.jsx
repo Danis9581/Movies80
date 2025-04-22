@@ -1,0 +1,440 @@
+// src/QuizPage.jsx
+import React, { useEffect, useState, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import bosqueTerror from './assets/Bosque-terror5.jpg';
+import exorcistaTheme from './assets/exorcista-theme2.mp3';
+import soundOnIcon from './assets/sound-on.png';
+import soundOffIcon from './assets/sound-off.png';
+import clickSound from './assets/click.wav';
+import pennywiseLaugh from './assets/pennywise_laugh.mp4';
+import questions from './data/questions';
+
+// Estilos CSS-in-JS para efectos retro
+const retroStyles = {
+  scanlines: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    background: `linear-gradient(
+      rgba(18, 16, 16, 0) 50%, 
+      rgba(0, 0, 0, 0.25) 50%
+    )`,
+    backgroundSize: '100% 4px',
+    pointerEvents: 'none',
+    zIndex: 6
+  },
+  crtEffect: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    background: 'radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.3) 100%)',
+    pointerEvents: 'none',
+    zIndex: 7
+  },
+  bloodDrips: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundImage: 'url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxwYXRoIGQ9Ik0yMCAyMEg0MHY0MEgyMHoiIGZpbGw9InJnYmEoMjAwLDAsMCwwLjAzKSIvPjxwYXRoIGQ9Ik02MCA2MEg4MHY0MEg2MHoiIGZpbGw9InJnYmEoMjAwLDAsMCwwLjAzKSIvPjxwYXRoIGQ9Ik0xMDAgMTIwSDEyMHY0MEgxMDB6IiBmaWxsPSJyZ2JhKDIwMCwwLDAsMC4wMykiLz48L3N2Zz4=")',
+    pointerEvents: 'none',
+    zIndex: 4,
+    opacity: 0.5
+  }
+};
+
+const backgroundImages = [
+  `url(${bosqueTerror})`,
+  'url("/public/imgGame/0.jpg")',
+  'url("/public/imgGame/10.jpg")',
+  'url("/public/imgGame/20.jpg")',
+  'url("/public/imgGame/30.jpg")',
+  'url("/public/imgGame/40.jpg")',
+  'url("/public/imgGame/50.jpg")',
+];
+
+function QuizPage() {
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(questions[0]);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [score, setScore] = useState(0);
+  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [gameCompleted, setGameCompleted] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
+  const [backgroundImageIndex, setBackgroundImageIndex] = useState(0);
+  const [showPennywiseVideo, setShowPennywiseVideo] = useState(false);
+  const [glitchEffect, setGlitchEffect] = useState(false);
+  const audioRef = useRef(new Audio(exorcistaTheme));
+  const clickSoundRef = useRef(new Audio(clickSound));
+  const videoRef = useRef(null);
+  const isMounted = useRef(false);
+
+  // Efecto de glitch aleatorio
+  useEffect(() => {
+    if (!gameStarted) return;
+    
+    const glitchInterval = setInterval(() => {
+      if (Math.random() > 0.8) {
+        setGlitchEffect(true);
+        setTimeout(() => setGlitchEffect(false), 100 + Math.random() * 200);
+      }
+    }, 5000);
+
+    return () => clearInterval(glitchInterval);
+  }, [gameStarted]);
+
+  useEffect(() => {
+    isMounted.current = true;
+    const audio = audioRef.current;
+    audio.loop = true;
+
+    if (isPlaying && isMounted.current) {
+      audio.play().catch(error => console.error("Error al reproducir el audio:", error));
+    } else {
+      audio.pause();
+    }
+
+    return () => {
+      audio.pause();
+      isMounted.current = false;
+    };
+  }, [isPlaying]);
+
+  useEffect(() => {
+    if (gameStarted && !gameOver && !gameCompleted) {
+      const nextBackgroundImageIndex = Math.min(Math.floor(correctAnswers / 10) + 1, backgroundImages.length - 1);
+      setBackgroundImageIndex(nextBackgroundImageIndex);
+    }
+  }, [correctAnswers, gameStarted, gameOver, gameCompleted]);
+
+  const toggleSound = () => {
+    setIsPlaying(!isPlaying);
+  };
+
+  const startGame = () => {
+    setGameStarted(true);
+    setCurrentQuestionIndex(0);
+    setCurrentQuestion(questions[0]);
+    setScore(0);
+    setCorrectAnswers(0);
+    setGameOver(false);
+    setGameCompleted(false);
+    setShowPennywiseVideo(false);
+    setBackgroundImageIndex(1);
+    setGlitchEffect(true);
+    setTimeout(() => setGlitchEffect(false), 500);
+  };
+
+  const handleAnswerSelection = (selectedOption) => {
+    clickSoundRef.current.play();
+    setSelectedAnswer(selectedOption);
+
+    const isCorrect = String(selectedOption).toLowerCase() === String(currentQuestion.correctAnswer).toLowerCase();
+
+    if (isCorrect) {
+      const newScore = score + 1;
+      const newCorrectAnswers = correctAnswers + 1;
+      
+      setScore(newScore);
+      setCorrectAnswers(newCorrectAnswers);
+      
+      const nextQuestionIndex = currentQuestionIndex + 1;
+      
+      if (nextQuestionIndex < questions.length) {
+        setGlitchEffect(true);
+        setTimeout(() => {
+          setGlitchEffect(false);
+          setCurrentQuestionIndex(nextQuestionIndex);
+          setCurrentQuestion(questions[nextQuestionIndex]);
+          setSelectedAnswer(null);
+        }, 300);
+      } else {
+        setBackgroundImageIndex(backgroundImages.length - 1);
+        setGameCompleted(true);
+      }
+    } else {
+      setIsPlaying(false);
+      setShowPennywiseVideo(true);
+      if (videoRef.current) {
+        videoRef.current.play();
+      }
+    }
+  };
+
+  const handleVideoEnd = () => {
+    setShowPennywiseVideo(false);
+    setGameOver(true);
+  };
+
+  const resetGame = () => {
+    setGlitchEffect(true);
+    setTimeout(() => {
+      setGlitchEffect(false);
+      setGameStarted(false);
+      setGameOver(false);
+      setGameCompleted(false);
+      setShowPennywiseVideo(false);
+      setCurrentQuestionIndex(0);
+      setCurrentQuestion(questions[0]);
+      setSelectedAnswer(null);
+      setScore(0);
+      setCorrectAnswers(0);
+      setBackgroundImageIndex(0);
+      setIsPlaying(true);
+    }, 500);
+  };
+
+  return (
+    <div
+      className="min-h-screen text-white p-4 relative flex flex-col items-center justify-center overflow-hidden"
+      style={{
+        backgroundImage: backgroundImages[backgroundImageIndex],
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        fontFamily: "'Courier New', monospace",
+        textShadow: '0 0 5px #ff0000, 0 0 10px #ff0000'
+      }}
+    >
+      {/* Efectos visuales retro */}
+      <div style={retroStyles.bloodDrips} />
+      <div style={retroStyles.scanlines} />
+      <div style={retroStyles.crtEffect} />
+      
+      {glitchEffect && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          background: 'linear-gradient(0deg, transparent 0%, rgba(255,0,0,0.2) 50%, transparent 100%)',
+          pointerEvents: 'none',
+          zIndex: 5,
+          animation: 'vhsGlitch 0.3s linear'
+        }} />
+      )}
+
+      <Link
+        to="/"
+        className="absolute top-4 right-4 hover:text-red-500 text-4xl font-bold transition duration-300 z-20"
+        style={{ 
+          textDecoration: 'none',
+          fontFamily: "'Creepster', cursive",
+          textShadow: '2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000'
+        }}
+      >
+        ☠
+      </Link>
+
+      {showPennywiseVideo && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90">
+          <video
+            ref={videoRef}
+            src={pennywiseLaugh}
+            autoPlay
+            onEnded={handleVideoEnd}
+            className="max-w-3xl max-h-3xl object-contain rounded-lg shadow-lg"
+          />
+        </div>
+      )}
+
+      <div className="relative z-10 text-center w-full max-w-6xl px-4">
+        {!gameStarted ? (
+          <div className="animate-flicker">
+            <h1 
+              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 tracking-widest uppercase"
+              style={{
+                fontFamily: "'Creepster', cursive",
+                color: '#ff0000',
+                textShadow: '3px 3px 0 #000, 5px 5px 0 #8b0000',
+                lineHeight: '1.2',
+                animation: 'pulse 2s infinite alternate'
+              }}
+            >
+              Horror Quiz
+              <br />
+              <span className="text-2xl md:text-4xl block mt-4" style={{ fontFamily: "'Courier New', monospace" }}>
+                ¿Cuántas preguntas serás capaz de acertar?
+              </span>
+            </h1>
+            <button
+              className="relative overflow-hidden bg-transparent border-4 border-red-600 text-red-500 font-bold py-4 px-8 rounded-none text-xl uppercase tracking-widest mt-8 hover:bg-red-600 hover:text-white transition duration-300 group"
+              onClick={startGame}
+              style={{
+                fontFamily: "'Creepster', cursive",
+                letterSpacing: '0.3em',
+                boxShadow: '0 0 15px rgba(255, 0, 0, 0.7)'
+              }}
+            >
+              <span className="relative z-10">Comenzar</span>
+              <span className="absolute inset-0 bg-red-800 transform -skew-x-12 -translate-x-full group-hover:translate-x-0 transition duration-500 opacity-70"></span>
+            </button>
+            
+            <div className="mt-12 text-yellow-400 text-sm md:text-base bg-black/60" style={{ fontFamily: "'Courier New', monospace" }}>
+              <p>⚠ ADVERTENCIA: Este juego contiene elementos de terror</p>
+              <p className="mt-2">No recomendado para menores de 18 años</p>
+            </div>
+          </div>
+        ) : gameOver ? (
+          <div 
+            className="absolute inset-0 z-40 flex flex-col items-center justify-center p-6"
+            style={{ backdropFilter: 'blur(3px)' }}
+          >
+            <h2 
+              className="text-6xl md:text-8xl lg:text-9xl font-bold mb-8 uppercase tracking-widest"
+              style={{
+                fontFamily: "'Creepster', cursive",
+                color: '#ff0000',
+                textShadow: '5px 5px 0 #000, 8px 8px 0 #8b0000',
+                animation: 'shake 0.5s infinite alternate'
+              }}
+            >
+              GAME OVER
+            </h2>
+            <p 
+              className="text-xl md:text-2xl text-gray-300 mb-6"
+              style={{
+                fontFamily: "'Courier New', monospace",
+                textShadow: '0 0 5px #ff0000'
+              }}
+            >
+              Acertaste <span className="text-red-500 font-bold">{score}</span> de <span className="text-red-500 font-bold">{questions.length}</span> preguntas.
+            </p>
+            <button
+              className="relative overflow-hidden bg-transparent border-4 border-red-600 text-red-500 font-bold py-6 px-6 rounded-none text-lg uppercase tracking-widest hover:bg-red-600 hover:text-white transition duration-300 group flex items-center justify-center"
+              onClick={resetGame}
+              style={{
+                fontFamily: "'Creepster', cursive",
+                letterSpacing: '0.3em',
+                boxShadow: '0 0 15px rgba(255, 0, 0, 0.7)'
+              }}
+            >
+              <span className="relative z-10">Volver a intentar</span>
+              <span className="absolute inset-0 bg-red-800 transform -skew-x-12 -translate-x-full group-hover:translate-x-0 transition duration-500 opacity-70"></span>
+            </button>
+          </div>
+        ) : gameCompleted ? (
+          <div className="animate-flicker">
+            <h2 
+              className="text-6xl md:text-8xl lg:text-9xl font-bold mb-8 uppercase tracking-widest"
+              style={{
+                fontFamily: "'Creepster', cursive",
+                color: '#00ff00',
+                textShadow: '5px 5px 0 #000, 8px 8px 0 #006400',
+                animation: 'glow-green 1s infinite alternate'
+              }}
+            >
+              YOU WIN
+            </h2>
+            <p 
+              className="text-xl md:text-2xl text-gray-300 mb-6"
+              style={{
+                fontFamily: "'Courier New', monospace",
+                textShadow: '0 0 5px #00ff00'
+              }}
+            >
+              Acertaste <span className="text-green-500 font-bold">{score}</span> de <span className="text-green-500 font-bold">{questions.length}</span> preguntas.
+            </p>
+            <button
+              className="relative overflow-hidden bg-transparent border-4 border-green-600 text-green-500 font-bold py-3 px-6 rounded-none text-lg uppercase tracking-widest hover:bg-green-600 hover:text-white transition duration-300 group"
+              onClick={resetGame}
+              style={{
+                fontFamily: "'Creepster', cursive",
+                letterSpacing: '0.3em',
+                boxShadow: '0 0 15px rgba(0, 255, 0, 0.7)'
+              }}
+            >
+              <span className="relative z-10">Volver a jugar</span>
+              <span className="absolute inset-0 bg-green-600 transform -skew-x-12 -translate-x-full group-hover:translate-x-0 transition duration-500"></span>
+            </button>
+          </div>
+        ) : (
+          <>
+            {currentQuestion && (
+              <div className="mb-8 animate-fadeIn">
+                <h2 
+                  className="text-2xl md:text-3xl lg:text-4xl mb-8 px-4 py-6 border-b-2 border-t-2 border-red-700"
+                  style={{
+                    fontFamily: "'Creepster', cursive",
+                    color: '#ff9900',
+                    textShadow: '2px 2px 0 #8b0000, 4px 4px 0 #000',
+                    lineHeight: '1.4',
+                    background: 'rgba(0,0,0,0.5)'
+                  }}
+                >
+                  {currentQuestion.question}
+                </h2>
+                <div className="flex flex-wrap justify-center gap-4">
+                  {currentQuestion.options.map((option, index) => (
+                    <button
+                      key={index}
+                      className={`transition duration-300 relative overflow-hidden group ${
+                        option.type === 'text' 
+                          ? 'bg-black/70 hover:bg-black/90 border-2 border-red-900 hover:border-red-600 text-white font-semibold py-4 px-6 text-lg'
+                          : 'border-2 border-red-900 hover:border-red-600'
+                      }`}
+                      onClick={() => handleAnswerSelection(option.value)}
+                      style={option.type === 'image' ? { 
+                        width: '200px', 
+                        height: '150px', 
+                        backgroundImage: `url(${option.value})`, 
+                        backgroundSize: 'cover', 
+                        backgroundPosition: 'center',
+                        boxShadow: '0 0 10px rgba(255,0,0,0.5)'
+                      } : {
+                        fontFamily: "'Courier New', monospace",
+                        textShadow: '0 0 5px #ff0000',
+                        boxShadow: '0 0 10px rgba(255,0,0,0.3)'
+                      }}
+                    >
+                      {option.type === 'text' && (
+                        <>
+                          <span className="relative z-10">{option.value}</span>
+                          <span className="absolute inset-0 bg-red-800 transform -skew-x-12 -translate-x-full group-hover:translate-x-0 transition duration-500 opacity-70"></span>
+                        </>
+                      )}
+                      {option.type === 'image' && <></>}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+            <p 
+              className="text-lg md:text-xl mt-6 py-2 px-4 bg-black/50 border border-red-900"
+              style={{
+                fontFamily: "'Courier New', monospace'",
+                color: '#ff9900',
+                textShadow: '0 0 5px #ff0000'
+              }}
+            >
+              Aciertos: <span className="text-red-500 font-bold">{score}</span> de <span className="text-red-500 font-bold">{questions.length}</span>
+            </p>
+          </>
+        )}
+      </div>
+
+      <button
+        onClick={toggleSound}
+        className="absolute bottom-4 right-4 bg-black/70 hover:bg-black/90 text-white rounded-full p-3 transition duration-300 z-20 border-2 border-red-900 hover:border-red-600"
+        style={{
+          boxShadow: '0 0 10px rgba(255,0,0,0.5)'
+        }}
+      >
+        <img
+          src={isPlaying ? soundOnIcon : soundOffIcon}
+          alt={isPlaying ? "Sonido activado" : "Sonido desactivado"}
+          className="w-6 h-6 filter drop-shadow(0 0 2px red)"
+        />
+      </button>
+    </div>
+  );
+}
+
+export default QuizPage;
