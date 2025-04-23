@@ -1,7 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
         
         @keyframes flicker {
           0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {

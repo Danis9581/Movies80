@@ -63,13 +63,13 @@ export function MovieList() {
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-red-900/50 to-transparent"></div>
 
       {/* Barra de búsqueda con estilo retro */}
-      <div className="px-4 mb-8">
+      <div className="px-2 sm:px-4 mb-6 sm:mb-8">
         <div className="max-w-2xl mx-auto relative">
           <div className="relative">
             <input
               type="text"
               placeholder="Buscar en nuestro archivo VHS..."
-              className="w-full bg-gray-800/80 text-white px-5 py-3 rounded-lg border-2 border-gray-700 focus:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-900/50 backdrop-blur-sm font-mono tracking-wide placeholder-gray-400"
+              className="w-full bg-gray-800/80 text-white px-3 py-2 sm:px-5 sm:py-3 rounded-lg border-2 border-gray-700 focus:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-900/50 backdrop-blur-sm font-mono tracking-wide placeholder-gray-400 text-sm sm:text-base"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />

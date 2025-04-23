@@ -8,15 +8,9 @@ export default function App() {
   const location = useLocation(); // Obtiene la ubicación actual
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-white p-4">
-      {/* Efecto grano de película vintage */}
-      <div className="fixed inset-0 pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPgogIDxmaWx0ZXIgaWQ9Im5vaXNlIj4KICAgIDxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjA1IiBudW1PY3RhdmVzPSIzIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+CiAgICA8ZmVDb2xvck1hdHJpeCB0eXBlPSJzYXR1cmF0ZSIgdmFsdWVzPSIwIi8+CiAgPC9maWx0ZXI+CiAgPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI25vaXNlKSIgb3BhY2l0eT0iMC4wMiIvPgo8L3N2Zz4=')] opacity-10"></div>
-
-      <header className="text-center mb-10 relative z-10">
-        {/* Efecto de neón */}
-        <h1 className="text-6xl font-bold text-red-500 mb-3 font-sans tracking-tight
-                          drop-shadow-[0_0_8px_rgba(220,38,38,0.7)]
-                          animate-pulse-slow transform transition duration-1000 hover:scale-105">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-white p-2 sm:p-4">
+      <header className="text-center mb-6 sm:mb-10 relative z-10">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-red-500 mb-3 font-sans tracking-tight drop-shadow-[0_0_8px_rgba(220,38,38,0.7)] animate-pulse-slow">
           TERROR OCHENTERO
         </h1>
 
@@ -30,10 +24,10 @@ export default function App() {
         {location.pathname === "/" && (
           <Link
             to="/quiz"
-            className="font-creepster inline-flex items-center justify-center bg-80s-yellow hover:bg-yellow-400 text-red-500 py-2 px-8 rounded-full shadow-xl transition duration-300 mb-8 border-2 border-80s-purple shadow-neon-purple text-xl"
+            className="font-creepster inline-flex items-center justify-center bg-80s-yellow hover:bg-yellow-400 text-red-500 py-1 sm:py-2 px-4 sm:px-8 rounded-full shadow-xl transition duration-300 mb-6 sm:mb-8 border-2 border-80s-purple shadow-neon-purple text-sm sm:text-base md:text-xl whitespace-nowrap"
           >
             ¿Qué tanto sabes sobre este género?
-            <img src="/MandoRetro.png" alt="Mando de consola" className="ml-3 h-8 w-12" />
+            <img src="/MandoRetro.png" alt="Mando de consola" className="ml-2 sm:ml-3 h-6 w-8 sm:h-8 sm:w-12" />
           </Link>
         )}
         

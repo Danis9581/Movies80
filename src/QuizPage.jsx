@@ -191,6 +191,15 @@ function QuizPage() {
     }, 500);
   };
 
+  // Función para determinar el tamaño de las imágenes de respuesta
+  const getAnswerImageSize = () => {
+    const isMobile = window.innerWidth < 768;
+    return {
+      width: isMobile ? '120px' : '200px',
+      height: isMobile ? '90px' : '150px'
+    };
+  };
+
   return (
     <div
       className="min-h-screen text-white p-4 relative flex flex-col items-center justify-center overflow-hidden"
@@ -198,6 +207,7 @@ function QuizPage() {
         backgroundImage: backgroundImages[backgroundImageIndex],
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
         fontFamily: "'Courier New', monospace",
         textShadow: '0 0 5px #ff0000, 0 0 10px #ff0000'
       }}
@@ -240,7 +250,7 @@ function QuizPage() {
             src={pennywiseLaugh}
             autoPlay
             onEnded={handleVideoEnd}
-            className="max-w-3xl max-h-3xl object-contain rounded-lg shadow-lg"
+            className="w-full h-full object-contain"
           />
         </div>
       )}
@@ -249,7 +259,7 @@ function QuizPage() {
         {!gameStarted ? (
           <div className="animate-flicker">
             <h1 
-              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 tracking-widest uppercase"
+              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-8 tracking-widest uppercase"
               style={{
                 fontFamily: "'Creepster', cursive",
                 color: '#ff0000',
@@ -260,12 +270,12 @@ function QuizPage() {
             >
               Horror Quiz
               <br />
-              <span className="text-2xl md:text-4xl block mt-4" style={{ fontFamily: "'Courier New', monospace" }}>
+              <span className="text-xl md:text-2xl lg:text-4xl block mt-2 md:mt-4" style={{ fontFamily: "'Courier New', monospace" }}>
                 ¿Cuántas preguntas serás capaz de acertar?
               </span>
             </h1>
             <button
-              className="relative overflow-hidden bg-transparent border-4 border-red-600 text-red-500 font-bold py-4 px-8 rounded-none text-xl uppercase tracking-widest mt-8 hover:bg-red-600 hover:text-white transition duration-300 group"
+              className="relative overflow-hidden bg-transparent border-2 md:border-4 border-red-600 text-red-500 font-bold py-2 md:py-4 px-4 md:px-8 rounded-none text-lg md:text-xl uppercase tracking-widest mt-4 md:mt-8 hover:bg-red-600 hover:text-white transition duration-300 group"
               onClick={startGame}
               style={{
                 fontFamily: "'Creepster', cursive",
@@ -277,18 +287,18 @@ function QuizPage() {
               <span className="absolute inset-0 bg-red-800 transform -skew-x-12 -translate-x-full group-hover:translate-x-0 transition duration-500 opacity-70"></span>
             </button>
             
-            <div className="mt-12 text-yellow-400 text-sm md:text-base bg-black/60" style={{ fontFamily: "'Courier New', monospace" }}>
+            <div className="mt-6 md:mt-12 text-yellow-400 text-xs md:text-sm lg:text-base bg-black/60 p-2" style={{ fontFamily: "'Courier New', monospace" }}>
               <p>⚠ ADVERTENCIA: Este juego contiene elementos de terror</p>
-              <p className="mt-2">No recomendado para menores de 18 años</p>
+              <p className="mt-1 md:mt-2">No recomendado para menores de 18 años</p>
             </div>
           </div>
         ) : gameOver ? (
           <div 
-            className="absolute inset-0 z-40 flex flex-col items-center justify-center p-6"
+            className="absolute inset-0 z-40 flex flex-col items-center justify-center p-4 md:p-6"
             style={{ backdropFilter: 'blur(3px)' }}
           >
             <h2 
-              className="text-6xl md:text-8xl lg:text-9xl font-bold mb-8 uppercase tracking-widest"
+              className="text-4xl md:text-6xl lg:text-8xl font-bold mb-4 md:mb-8 uppercase tracking-widest"
               style={{
                 fontFamily: "'Creepster', cursive",
                 color: '#ff0000',
@@ -299,7 +309,7 @@ function QuizPage() {
               GAME OVER
             </h2>
             <p 
-              className="text-xl md:text-2xl text-gray-300 mb-6"
+              className="text-lg md:text-xl lg:text-2xl text-gray-300 mb-4 md:mb-6"
               style={{
                 fontFamily: "'Courier New', monospace",
                 textShadow: '0 0 5px #ff0000'
@@ -308,7 +318,7 @@ function QuizPage() {
               Acertaste <span className="text-red-500 font-bold">{score}</span> de <span className="text-red-500 font-bold">{questions.length}</span> preguntas.
             </p>
             <button
-              className="relative overflow-hidden bg-transparent border-4 border-red-600 text-red-500 font-bold py-6 px-6 rounded-none text-lg uppercase tracking-widest hover:bg-red-600 hover:text-white transition duration-300 group flex items-center justify-center"
+              className="relative overflow-hidden bg-transparent border-2 md:border-4 border-red-600 text-red-500 font-bold py-3 md:py-4 px-4 md:px-6 rounded-none text-base md:text-lg uppercase tracking-widest hover:bg-red-600 hover:text-white transition duration-300 group flex items-center justify-center"
               onClick={resetGame}
               style={{
                 fontFamily: "'Creepster', cursive",
@@ -323,7 +333,7 @@ function QuizPage() {
         ) : gameCompleted ? (
           <div className="animate-flicker">
             <h2 
-              className="text-6xl md:text-8xl lg:text-9xl font-bold mb-8 uppercase tracking-widest"
+              className="text-4xl md:text-6xl lg:text-8xl font-bold mb-4 md:mb-8 uppercase tracking-widest"
               style={{
                 fontFamily: "'Creepster', cursive",
                 color: '#00ff00',
@@ -334,7 +344,7 @@ function QuizPage() {
               YOU WIN
             </h2>
             <p 
-              className="text-xl md:text-2xl text-gray-300 mb-6"
+              className="text-lg md:text-xl lg:text-2xl text-gray-300 mb-4 md:mb-6"
               style={{
                 fontFamily: "'Courier New', monospace",
                 textShadow: '0 0 5px #00ff00'
@@ -343,7 +353,7 @@ function QuizPage() {
               Acertaste <span className="text-green-500 font-bold">{score}</span> de <span className="text-green-500 font-bold">{questions.length}</span> preguntas.
             </p>
             <button
-              className="relative overflow-hidden bg-transparent border-4 border-green-600 text-green-500 font-bold py-3 px-6 rounded-none text-lg uppercase tracking-widest hover:bg-green-600 hover:text-white transition duration-300 group"
+              className="relative overflow-hidden bg-transparent border-2 md:border-4 border-green-600 text-green-500 font-bold py-2 md:py-3 px-4 md:px-6 rounded-none text-base md:text-lg uppercase tracking-widest hover:bg-green-600 hover:text-white transition duration-300 group"
               onClick={resetGame}
               style={{
                 fontFamily: "'Creepster', cursive",
@@ -358,9 +368,9 @@ function QuizPage() {
         ) : (
           <>
             {currentQuestion && (
-              <div className="mb-8 animate-fadeIn">
+              <div className="mb-4 md:mb-8 animate-fadeIn">
                 <h2 
-                  className="text-2xl md:text-3xl lg:text-4xl mb-8 px-4 py-6 border-b-2 border-t-2 border-red-700"
+                  className="text-xl md:text-2xl lg:text-3xl mb-4 md:mb-8 px-2 md:px-4 py-3 md:py-6 border-b-2 border-t-2 border-red-700"
                   style={{
                     fontFamily: "'Creepster', cursive",
                     color: '#ff9900',
@@ -371,43 +381,46 @@ function QuizPage() {
                 >
                   {currentQuestion.question}
                 </h2>
-                <div className="flex flex-wrap justify-center gap-4">
-                  {currentQuestion.options.map((option, index) => (
-                    <button
-                      key={index}
-                      className={`transition duration-300 relative overflow-hidden group ${
-                        option.type === 'text' 
-                          ? 'bg-black/70 hover:bg-black/90 border-2 border-red-900 hover:border-red-600 text-white font-semibold py-4 px-6 text-lg'
-                          : 'border-2 border-red-900 hover:border-red-600'
-                      }`}
-                      onClick={() => handleAnswerSelection(option.value)}
-                      style={option.type === 'image' ? { 
-                        width: '200px', 
-                        height: '150px', 
-                        backgroundImage: `url(${option.value})`, 
-                        backgroundSize: 'cover', 
-                        backgroundPosition: 'center',
-                        boxShadow: '0 0 10px rgba(255,0,0,0.5)'
-                      } : {
-                        fontFamily: "'Courier New', monospace",
-                        textShadow: '0 0 5px #ff0000',
-                        boxShadow: '0 0 10px rgba(255,0,0,0.3)'
-                      }}
-                    >
-                      {option.type === 'text' && (
-                        <>
-                          <span className="relative z-10">{option.value}</span>
-                          <span className="absolute inset-0 bg-red-800 transform -skew-x-12 -translate-x-full group-hover:translate-x-0 transition duration-500 opacity-70"></span>
-                        </>
-                      )}
-                      {option.type === 'image' && <></>}
-                    </button>
-                  ))}
+                <div className="grid grid-cols-2 md:flex md:flex-wrap justify-center gap-2 md:gap-4">
+                  {currentQuestion.options.map((option, index) => {
+                    const imageSize = getAnswerImageSize();
+                    return (
+                      <button
+                        key={index}
+                        className={`transition duration-300 relative overflow-hidden group ${
+                          option.type === 'text' 
+                            ? 'bg-black/70 hover:bg-black/90 border border-red-900 hover:border-red-600 text-white font-semibold py-2 md:py-4 px-2 md:px-4 text-sm md:text-lg'
+                            : 'border border-red-900 hover:border-red-600'
+                        }`}
+                        onClick={() => handleAnswerSelection(option.value)}
+                        style={option.type === 'image' ? { 
+                          width: imageSize.width, 
+                          height: imageSize.height, 
+                          backgroundImage: `url(${option.value})`, 
+                          backgroundSize: 'cover', 
+                          backgroundPosition: 'center',
+                          boxShadow: '0 0 10px rgba(255,0,0,0.5)'
+                        } : {
+                          fontFamily: "'Courier New', monospace",
+                          textShadow: '0 0 5px #ff0000',
+                          boxShadow: '0 0 10px rgba(255,0,0,0.3)'
+                        }}
+                      >
+                        {option.type === 'text' && (
+                          <>
+                            <span className="relative z-10">{option.value}</span>
+                            <span className="absolute inset-0 bg-red-800 transform -skew-x-12 -translate-x-full group-hover:translate-x-0 transition duration-500 opacity-70"></span>
+                          </>
+                        )}
+                        {option.type === 'image' && <></>}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             )}
             <p 
-              className="text-lg md:text-xl mt-6 py-2 px-4 bg-black/50 border border-red-900"
+              className="text-base md:text-lg lg:text-xl mt-4 md:mt-6 py-1 md:py-2 px-2 md:px-4 bg-black/50 border border-red-900"
               style={{
                 fontFamily: "'Courier New', monospace'",
                 color: '#ff9900',
@@ -422,7 +435,7 @@ function QuizPage() {
 
       <button
         onClick={toggleSound}
-        className="absolute bottom-4 right-4 bg-black/70 hover:bg-black/90 text-white rounded-full p-3 transition duration-300 z-20 border-2 border-red-900 hover:border-red-600"
+        className="absolute bottom-4 right-4 bg-black/70 hover:bg-black/90 text-white rounded-full p-2 md:p-3 transition duration-300 z-20 border border-red-900 hover:border-red-600"
         style={{
           boxShadow: '0 0 10px rgba(255,0,0,0.5)'
         }}
@@ -430,7 +443,7 @@ function QuizPage() {
         <img
           src={isPlaying ? soundOnIcon : soundOffIcon}
           alt={isPlaying ? "Sonido activado" : "Sonido desactivado"}
-          className="w-6 h-6 filter drop-shadow(0 0 2px red)"
+          className="w-4 h-4 md:w-6 md:h-6"
         />
       </button>
     </div>
