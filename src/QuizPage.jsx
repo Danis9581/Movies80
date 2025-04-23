@@ -219,6 +219,7 @@ function QuizPage() {
 
   // Estilo principal SIN filtros oscuros
   const mainContainerStyle = {
+    backgroundColor: 'black',
     backgroundImage: isMobile 
       ? backgroundImages.mobile[backgroundImageIndex] 
       : backgroundImages.desktop[backgroundImageIndex],
