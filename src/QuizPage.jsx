@@ -53,15 +53,27 @@ const retroStyles = {
   }
 };
 
-const backgroundImages = [
-  `url(${bosqueTerror})`,
-  'url("/imgGame/0.jpg")',
-  'url("/imgGame/10.jpg")',
-  'url("/imgGame/20.jpg")',
-  'url("/imgGame/30.jpg")',
-  'url("/imgGame/40.jpg")',
-  'url("/imgGame/50.jpg")',
-];
+// Imágenes de fondo para desktop y mobile
+const backgroundImages = {
+  desktop: [
+    `url(${bosqueTerror})`,
+    'url("/imgGame/0.jpg")',
+    'url("/imgGame/10.jpg")',
+    'url("/imgGame/20.jpg")',
+    'url("/imgGame/30.jpg")',
+    'url("/imgGame/40.jpg")',
+    'url("/imgGame/50.jpg")',
+  ],
+  mobile: [
+    `url(${bosqueTerror})`,
+    'url("/imgGame/0mobile.jpg")',
+    'url("/imgGame/10mobile.jpg")',
+    'url("/imgGame/20mobile.jpg")',
+    'url("/imgGame/30mobile.jpg")',
+    'url("/imgGame/40mobile.jpg")',
+    'url("/imgGame/50mobile.jpg")',
+  ]
+};
 
 function QuizPage() {
   const [isPlaying, setIsPlaying] = useState(true);
@@ -76,10 +88,33 @@ function QuizPage() {
   const [backgroundImageIndex, setBackgroundImageIndex] = useState(0);
   const [showPennywiseVideo, setShowPennywiseVideo] = useState(false);
   const [glitchEffect, setGlitchEffect] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const audioRef = useRef(new Audio(exorcistaTheme));
   const clickSoundRef = useRef(new Audio(clickSound));
   const videoRef = useRef(null);
   const isMounted = useRef(false);
+
+  // Detectar si es móvil y cambios de tamaño
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+    
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
+
+  // Preload de imágenes para móviles
+  useEffect(() => {
+    if (isMobile) {
+      backgroundImages.mobile.forEach(img => {
+        const image = new Image();
+        image.src = img.replace('url("', '').replace('")', '');
+      });
+    }
+  }, [isMobile]);
 
   // Efecto de glitch aleatorio
   useEffect(() => {
@@ -114,7 +149,7 @@ function QuizPage() {
 
   useEffect(() => {
     if (gameStarted && !gameOver && !gameCompleted) {
-      const nextBackgroundImageIndex = Math.min(Math.floor(correctAnswers / 10) + 1, backgroundImages.length - 1);
+      const nextBackgroundImageIndex = Math.min(Math.floor(correctAnswers / 10) + 1, backgroundImages.desktop.length - 1);
       setBackgroundImageIndex(nextBackgroundImageIndex);
     }
   }, [correctAnswers, gameStarted, gameOver, gameCompleted]);
@@ -161,7 +196,7 @@ function QuizPage() {
           setSelectedAnswer(null);
         }, 300);
       } else {
-        setBackgroundImageIndex(backgroundImages.length - 1);
+        setBackgroundImageIndex(backgroundImages.desktop.length - 1);
         setGameCompleted(true);
       }
     } else {
@@ -198,24 +233,30 @@ function QuizPage() {
 
   // Función para determinar el tamaño de las imágenes de respuesta
   const getAnswerImageSize = () => {
-    const isMobile = window.innerWidth < 768;
     return {
       width: isMobile ? '120px' : '200px',
       height: isMobile ? '90px' : '150px'
     };
   };
 
+  // Estilo del contenedor principal
+  const mainContainerStyle = {
+    backgroundImage: isMobile 
+      ? backgroundImages.mobile[backgroundImageIndex] 
+      : backgroundImages.desktop[backgroundImageIndex],
+    backgroundSize: isMobile ? 'contain' : 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundColor: '#000',
+    backgroundAttachment: 'fixed',
+    fontFamily: "'Courier New', monospace",
+    textShadow: '0 0 5px #ff0000, 0 0 10px #ff0000'
+  };
+
   return (
     <div
       className="min-h-screen text-white p-4 relative flex flex-col items-center justify-center overflow-hidden"
-      style={{
-        backgroundImage: backgroundImages[backgroundImageIndex],
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed',
-        fontFamily: "'Courier New', monospace",
-        textShadow: '0 0 5px #ff0000, 0 0 10px #ff0000'
-      }}
+      style={mainContainerStyle}
     >
       {/* Efectos visuales retro */}
       <div style={retroStyles.bloodDrips} />
