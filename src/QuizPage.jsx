@@ -9,6 +9,11 @@ import clickSound from './assets/click.wav';
 import pennywiseLaugh from './assets/pennywise_laugh.mp4';
 import questions from './data/questions';
 
+// Función para detectar si el dispositivo es táctil
+const isTouchDevice = () => {
+  return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+};
+
 // Estilos CSS-in-JS para efectos retro
 const retroStyles = {
   scanlines: {
@@ -255,7 +260,7 @@ function QuizPage() {
         </div>
       )}
 
-      <div className="relative z-10 text-center w-full max-w-6xl px-4">
+      <div className="relative z-10 text-center w-full max-w-md md:max-w-6xl px-4">
         {!gameStarted ? (
           <div className="animate-flicker">
             <h1 
@@ -381,16 +386,18 @@ function QuizPage() {
                 >
                   {currentQuestion.question}
                 </h2>
-                <div className="grid grid-cols-2 md:flex md:flex-wrap justify-center gap-2 md:gap-4">
+                <div className="grid grid-cols-2 gap-2 md:gap-4 w-full max-w-md mx-auto">
                   {currentQuestion.options.map((option, index) => {
                     const imageSize = getAnswerImageSize();
                     return (
                       <button
                         key={index}
-                        className={`transition duration-300 relative overflow-hidden group ${
+                        className={`transition duration-300 relative overflow-hidden ${
+                          !isTouchDevice() ? 'group' : ''
+                        } ${
                           option.type === 'text' 
                             ? 'bg-black/70 hover:bg-black/90 border border-red-900 hover:border-red-600 text-white font-semibold py-2 md:py-4 px-2 md:px-4 text-sm md:text-lg'
-                            : 'border border-red-900 hover:border-red-600'
+                            : 'border border-red-900 hover:border-red-600 mx-auto'
                         }`}
                         onClick={() => handleAnswerSelection(option.value)}
                         style={option.type === 'image' ? { 
@@ -399,7 +406,9 @@ function QuizPage() {
                           backgroundImage: `url(${option.value})`, 
                           backgroundSize: 'cover', 
                           backgroundPosition: 'center',
-                          boxShadow: '0 0 10px rgba(255,0,0,0.5)'
+                          boxShadow: '0 0 10px rgba(255,0,0,0.5)',
+                          display: 'flex',
+                          margin: '0 auto'
                         } : {
                           fontFamily: "'Courier New', monospace",
                           textShadow: '0 0 5px #ff0000',
@@ -409,7 +418,9 @@ function QuizPage() {
                         {option.type === 'text' && (
                           <>
                             <span className="relative z-10">{option.value}</span>
-                            <span className="absolute inset-0 bg-red-800 transform -skew-x-12 -translate-x-full group-hover:translate-x-0 transition duration-500 opacity-70"></span>
+                            {!isTouchDevice() && (
+                              <span className="absolute inset-0 bg-red-800 transform -skew-x-12 -translate-x-full group-hover:translate-x-0 transition duration-500 opacity-70"></span>
+                            )}
                           </>
                         )}
                         {option.type === 'image' && <></>}
