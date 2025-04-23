@@ -34,8 +34,20 @@ export function MovieList() {
           setLoadProgress((loadedPages / totalPages) * 100);
         }
 
-        setAllMovies(allResults);
-        setFilteredMovies(allResults);
+        // Ordenar películas alfabéticamente y eliminar duplicados
+        const uniqueMovies = allResults.filter(
+          (movie, index, self) =>
+            index === self.findIndex((m) => (
+              m.id === movie.id
+            ))
+        );
+        
+        const sortedMovies = uniqueMovies.sort((a, b) => 
+          a.title.localeCompare(b.title)
+        );
+        
+        setAllMovies(sortedMovies);
+        setFilteredMovies(sortedMovies);
       } finally {
         setIsLoading(false);
       }
@@ -44,17 +56,28 @@ export function MovieList() {
     loadAllMovies();
   }, []);
 
-  // Filtrar películas
+  // Filtrar películas - Versión mejorada
   useEffect(() => {
-    if (searchTerm.trim() === "") {
+    if (!searchTerm.trim()) {
       setFilteredMovies(allMovies);
-    } else {
-      const searchText = searchTerm.toLowerCase();
-      const filtered = allMovies.filter(movie => 
-        movie.title.toLowerCase().startsWith(searchText)
-      );
-      setFilteredMovies(filtered);
+      return;
     }
+
+    const searchText = searchTerm.toLowerCase().trim();
+    const filtered = allMovies.filter(movie => {
+      const movieTitle = movie.title.toLowerCase();
+      
+      // Búsqueda flexible pero precisa
+      return (
+        movieTitle === searchText || // Coincidencia exacta
+        movieTitle.startsWith(searchText + ' ') || // Comienza con el término
+        movieTitle.includes(' ' + searchText + ' ') || // Término en medio
+        movieTitle.endsWith(' ' + searchText) || // Término al final
+        movieTitle.split(' ').some(word => word.startsWith(searchText)) // Palabras que empiecen
+      );
+    });
+
+    setFilteredMovies(filtered);
   }, [searchTerm, allMovies]);
 
   return (
@@ -78,7 +101,7 @@ export function MovieList() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </div>
-            {/* boton pAra limpiar la busqueda */}
+            {/* Botón para limpiar la búsqueda */}
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm("")}
@@ -89,7 +112,8 @@ export function MovieList() {
             )}
           </div>
           <div className="text-xs text-gray-500 mt-2 ml-1 font-mono tracking-wider">
-            {searchTerm ? `Buscando: "${searchTerm}"` : "Total en archivo: " + allMovies.length + " películas"}
+            {searchTerm ? `Buscando: "${searchTerm}" (${filteredMovies.length} resultados)` : 
+             `Total en archivo: ${allMovies.length} películas`}
           </div>
         </div>
       </div>
@@ -151,6 +175,9 @@ export function MovieList() {
                     alt={movie.title}
                     className="w-full h-auto rounded-lg shadow-xl group-hover:scale-105 transition-all duration-500 ease-out"
                     loading="lazy"
+                    onError={(e) => {
+                      e.target.src = 'https://via.placeholder.com/500x750?text=Poster+No+Disponible';
+                    }}
                   />
                   <div className="absolute bottom-2 left-2 right-2">
                     <p className="text-white text-sm font-bold truncate drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
