@@ -1,10 +1,12 @@
 ## 🎬 80s Horror80 - La Era Dorada del Terror
 
+[![Project Status](https://img.shields.io/badge/Status-Active-brightgreen)]()
 [![Vercel Deployment](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=flat&logo=vercel)](https://movies80.vercel.app)
 [![React](https://img.shields.io/badge/React-18.2-blue?logo=react)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-4.4-orange?logo=vite)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.3-blueviolet?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
+[![Movies](https://img.shields.io/badge/Movies-2800+-red)]()
 
 **Plataforma donde podrás encontrar información sobre más de 2800 películas del género de terror ochentero —el mejor de la historia—, donde la creatividad no tenía límites y no todo eran espíritus y sustos a lo tonto.**  
 
@@ -34,8 +36,9 @@ Explora carátulas originales, sinopsis, puntuaciones y descubre films olvidados
 | **The Movie Database (TMDB)** | API para datos de películas.          |
 
 ## 📸 Capturas de Pantalla
-| Catálogo | Quiz |
-|----------|------|
-| ![Catálogo](/public/screenshots/cap1.jpg) | ![Quiz](/public/screenshots/cap2.jpg) |
-| ![Catálogo](/public/screenshots/cap2.jpg) | ![Quiz](/public/screenshots/cap4.jpg) | 
-                                            | ![Quiz](/public/screenshots/cap5.jpg) |
+
+ ![Catálogo](/public/screenshots/cap1.jpg)
+ ![Quiz](/public/screenshots/cap2.jpg) 
+ ![Catálogo](/public/screenshots/cap3.jpg)
+ ![Quiz](/public/screenshots/cap4.jpg) 
+ ![Quiz](/public/screenshots/cap5.jpg) 
