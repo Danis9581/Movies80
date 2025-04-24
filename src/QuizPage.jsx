@@ -136,10 +136,13 @@ function QuizPage() {
     };
   }, [isPlaying]);
 
-  // Cambiar fondo cada 10 aciertos
+  // Cambiar fondo cada 10 aciertos y al completar el juego
   useEffect(() => {
-    if (gameStarted && !gameOver && !gameCompleted) {
-      const nextIndex = Math.min(Math.floor(correctAnswers / 10) + 1, backgroundImages.desktop.length - 1);
+    if (gameCompleted) {
+      // Cuando se completa el juego, mostrar la última imagen (50.jpg o 50mobile.jpg)
+      setBackgroundImageIndex(backgroundImages.desktop.length - 1);
+    } else if (gameStarted && !gameOver) {
+      const nextIndex = Math.min(Math.floor(correctAnswers / 10) + 1, backgroundImages.desktop.length - 2);
       setBackgroundImageIndex(nextIndex);
     }
   }, [correctAnswers, gameStarted, gameOver, gameCompleted]);
@@ -180,6 +183,7 @@ function QuizPage() {
           setSelectedAnswer(null);
         }, 300);
       } else {
+        // Cuando se completa la última pregunta (50)
         setGameCompleted(true);
       }
     } else {
