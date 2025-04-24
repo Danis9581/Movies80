@@ -40,7 +40,7 @@ export function MovieModal({ movie, onClose }) {
       <div className="relative w-full max-w-full md:max-w-4xl mx-2 my-4">
         {/* Contenedor del contenido con efecto VHS */}
         <div 
-          className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-xl p-4 sm:p-6 relative border-2 border-red-900/50 shadow-2xl md:overflow-y-auto md:max-h-[90vh]"
+          className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-xl p-4 sm:p-6 relative border-2 border-red-900/50 shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Efecto de esquinas VHS */}
@@ -111,7 +111,7 @@ export function MovieModal({ movie, onClose }) {
               {/* Descripción - Texto más pequeño en móviles */}
               <div className="mb-4 sm:mb-6">
                 <h3 className="text-red-400 font-mono tracking-wider text-xs sm:text-sm mb-1 sm:mb-2">SINOPSIS DEL ARCHIVO:</h3>
-                <p className="text-gray-300 text-sm sm:text-lg leading-relaxed border-l-2 border-red-900/50 pl-3 sm:pl-4 italic max-h-[100px] sm:max-h-none overflow-y-auto">
+                <p className="text-gray-300 text-sm sm:text-lg leading-relaxed border-l-2 border-red-900/50 pl-3 sm:pl-4 italic max-h-[150px] overflow-y-auto">
                   {spanishOverview || movie.overview || "Descripción no disponible en nuestros registros."}
                 </p>
               </div>
