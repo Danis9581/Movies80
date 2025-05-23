@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
 [![Movies](https://img.shields.io/badge/Movies-2800+-red)]()
 
-**Plataforma donde podrás encontrar información sobre más de 2800 películas del género de terror ochentero —el mejor de la historia—, donde la creatividad no tenía límites y no todo eran espíritus y sustos a lo tonto.**  
+**Plataforma donde podrás encontrar información sobre más de 2800 películas del género de terror ochentero —el mejor de la historia—, donde la creatividad no tenía límites.**  
 
 Explora carátulas originales, sinopsis, puntuaciones y descubre films olvidados. Además, incluye un **Quiz Friki** con preguntas de texto e imagen para poner a prueba tu conocimiento. Cada 10 aciertos, el fondo cambia, llevándote a escenarios icónicos que solo verás si alcanzas las 50 respuestas correctas.  
 
