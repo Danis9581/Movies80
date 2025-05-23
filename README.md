@@ -37,8 +37,10 @@ Explora carátulas originales, sinopsis, puntuaciones y descubre films olvidados
 
 ## 📸 Capturas de Pantalla
 
+**Catálogo**
  ![Catálogo](/public/screenshots/cap1.jpg)
  ![Quiz](/public/screenshots/cap2.jpg) 
+**Quiz**
  ![Catálogo](/public/screenshots/cap3.jpg)
  ![Quiz](/public/screenshots/cap4.jpg) 
  ![Quiz](/public/screenshots/cap5.jpg) 
